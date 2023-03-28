@@ -25,8 +25,17 @@ export function LaginForm() {
           </View>
           <View style={styles.form}>
             <View>
-              <TextInput style={styles.input} />
+              <TextInput style={styles.input} placeholder="Login" />
             </View>
+            <View>
+              <TextInput style={styles.input} placeholder="Email" />
+            </View>
+            <View>
+              <TextInput style={styles.input} placeholder="Password" />
+            </View>
+            <TouchableOpacity style={styles.registrationBtn}>
+              <Text style={styles.registrationTitle}>Registration</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </ImageBackground>
@@ -77,7 +86,7 @@ const styles = StyleSheet.create({
   },
   containerRegister: {
     // flex: 1,
-    height: 450,
+    height: 460,
     backgroundColor: "#fff",
     borderTopRightRadius: 25,
     borderTopLeftRadius: 25,
@@ -93,29 +102,46 @@ const styles = StyleSheet.create({
     lineHeight: 35,
     letterSpacing: 0.01,
     fontWeight: 500,
+    marginBottom: 16,
     // color: "#f0f8ff",
     // fontFamily: "DMMono-Regular",
   },
 
   input: {
     // flex: 1,
+
     borderWidth: 1,
     backgroundColor: "#F6F6F6",
     borderColor: "#f0f8ff",
-    height: 40,
+    height: 50,
     borderRadius: 6,
-    paddingLeft: 15,
+    paddingLeft: 16,
+    marginTop: 16,
     // justifyContent: "center",
     // alignItems: "center",
 
     color: "#f0f8ff",
   },
   form: {
-    marginTop: 32,
     flex: 1,
     marginHorizontal: 16,
   },
   inputTitle: {
     // flex: 1,
+  },
+  registrationBtn: {
+    marginTop: 43,
+    paddingTop: 16,
+    paddingBottom: 16,
+    paddingLeft: 32,
+    paddingRight: 32,
+    backgroundColor: "#ff6c00",
+    alignItems: "center",
+    borderRadius: 25,
+  },
+  registrationTitle: {
+    fontSize: 16,
+    lineHeight: 19,
+    color: "#fff",
   },
 });
