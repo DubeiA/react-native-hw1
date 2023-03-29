@@ -14,9 +14,9 @@ import {
 } from "react-native";
 
 export function LaginForm() {
-  const [focusLogin, setFocusLogin] = useState("");
-  const [focusEmail, setFocusEmail] = useState("");
-  const [focusPassword, setFocusPassword] = useState("");
+  const [focusLogin, setFocusLogin] = useState("#e8e8e8");
+  const [focusEmail, setFocusEmail] = useState("#e8e8e8");
+  const [focusPassword, setFocusPassword] = useState("#e8e8e8");
   const [showPassword, setShowPassword] = useState(false);
   const [isShowKeyboard, setIsShowKeyboard] = useState(false);
 
@@ -26,7 +26,9 @@ export function LaginForm() {
 
   const onFocusLogin = () => {
     setFocusLogin("#ff6c00");
+
     setIsShowKeyboard(true);
+    // Keyboard.dismiss();
   };
   const onFocusEmail = () => {
     setFocusEmail("#ff6c00");
@@ -40,10 +42,24 @@ export function LaginForm() {
     setFocusLogin("#e8e8e8");
     setFocusEmail("#e8e8e8");
     setFocusPassword("#e8e8e8");
+    setIsShowKeyboard(true);
   };
 
+  const touch = () => {
+    Keyboard.dismiss();
+    setIsShowKeyboard(true);
+  };
+
+  //   useEffect(() => {
+  //     if (focusEmail === "#e8e8e8") {
+  //       setIsShowKeyboard(true);
+  //     }
+  //   });
+
+  //   console.log(focusEmail);
+
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    <TouchableWithoutFeedback onPress={touch}>
       <View style={styles.container}>
         <ImageBackground
           style={styles.image}
@@ -52,33 +68,16 @@ export function LaginForm() {
           <KeyboardAvoidingView
             behavior={Platform.OS == "ios" ? "padding" : "height"}
           >
-            <View style={styles.containerRegister}>
-              <View style={styles.containerFoto}>
-                <Image
-                  style={styles.foto}
-                  source={require("../assets/images/Rectangle.jpg")}
-                  // style={{ width: 120, height: 120 }}
-                />
-                <TouchableOpacity>
-                  <Image
-                    style={styles.addBtn}
-                    source={require("../assets/images/add.png")}
-                    //   style={{ width: 500, height: 500 }}
-                  />
-                </TouchableOpacity>
-              </View>
+            <View
+              style={{
+                ...styles.containerRegister,
+                marginBottom: isShowKeyboard ? 0 : 60,
+              }}
+            >
               <View style={styles.header}>
-                <Text style={styles.headerTitle}>Registration</Text>
+                <Text style={styles.headerTitle}>Log In</Text>
               </View>
               <View style={styles.form}>
-                <View>
-                  <TextInput
-                    style={[styles.input, { borderColor: focusLogin }]}
-                    placeholder="Login"
-                    onBlur={onBlur}
-                    onFocus={onFocusLogin}
-                  />
-                </View>
                 <View>
                   <TextInput
                     style={[styles.input, { borderColor: focusEmail }]}
@@ -103,13 +102,13 @@ export function LaginForm() {
                   </TouchableOpacity>
                 </View>
                 <TouchableOpacity style={styles.registrationBtn}>
-                  <Text style={styles.registrationTitle}>Registration</Text>
+                  <Text style={styles.registrationTitle}>Log In</Text>
                 </TouchableOpacity>
 
                 <View>
                   <TouchableOpacity style={styles.enter}>
                     <Text style={styles.enterText}>
-                      Already have an account? Log in
+                      Don't have an account? Registration
                     </Text>
                   </TouchableOpacity>
                 </View>
@@ -129,23 +128,9 @@ const styles = StyleSheet.create({
   },
   image: {
     flex: 1,
-    resizeMode: "cover",
+    resizeMode: "contain",
     justifyContent: "flex-end",
     // alignItems: "center",
-  },
-  containerFoto: {
-    position: "relative",
-    zIndex: 2,
-    top: -60,
-    backgroundColor: "#F6F6F6",
-    marginLeft: "auto",
-    marginRight: "auto",
-    borderTopRightRadius: 16,
-    borderTopLeftRadius: 16,
-  },
-  foto: {
-    borderRadius: 16,
-    // position: "relative",
   },
 
   addBtn: {
@@ -157,24 +142,25 @@ const styles = StyleSheet.create({
   },
   containerRegister: {
     // flex: 1,
-    height: 500,
+    height: 450,
     backgroundColor: "#fff",
     borderTopRightRadius: 25,
     borderTopLeftRadius: 25,
   },
   header: {
     alignItems: "center",
-    marginTop: -40,
-    color: "#212121",
+    marginTop: 32,
+
     // marginBottom: 120,
   },
   headerTitle: {
     fontSize: 30,
     lineHeight: 35,
-    letterSpacing: 0.01,
+
     fontWeight: 500,
     marginBottom: 16,
-    // color: "#f0f8ff",
+    color: "#212121",
+
     // fontFamily: "DMMono-Regular",
   },
 
