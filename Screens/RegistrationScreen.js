@@ -13,12 +13,46 @@ import {
   Platform,
 } from "react-native";
 
+// import { useFonts } from "expo-font";
+import * as Font from "expo-font";
+import { AppLoading } from "expo";
+// import { SplashScreen } from "expo-splash-screen";
+// import AppLoading from "expo-app-loading";
+
+initialState = {
+  login: "",
+  email: "",
+  password: "",
+};
+
+const loadFonts = async () => {
+  await Font.loadAsync({
+    "Roboto-Regulat": require("../assets/fonts/Roboto/Roboto-Regular.ttf"),
+    "Roboto-Bold": require("../assets/fonts/Roboto/Roboto-Bold.ttf"),
+  });
+};
+
 export function RegistrationScreen() {
   const [focusLogin, setFocusLogin] = useState("#e8e8e8");
   const [focusEmail, setFocusEmail] = useState("#e8e8e8");
   const [focusPassword, setFocusPassword] = useState("#e8e8e8");
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(true);
   const [isShowKeyboard, setIsShowKeyboard] = useState(false);
+  const [data, setData] = useState(initialState);
+  const [isReady, setIsReady] = useState(false);
+
+  //   let [fontsLoaded] = useFonts({
+  //     "Roboto-Regulat": require("../assets/fonts/Roboto-Regular.ttf"),
+  //     "Roboto-Bold": require("../assets/fonts/Roboto-Bold.ttf"),
+  //   });
+
+  //  if (!fontsLoaded) {
+  //    return null;
+  // }
+
+  // useEffect(() => {
+  //     asy
+  // })
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -50,15 +84,16 @@ export function RegistrationScreen() {
     setIsShowKeyboard(true);
   };
 
-  //   useEffect(() => {
-  //     if (focusEmail === "#e8e8e8") {
-  //       setIsShowKeyboard(true);
-  //     }
-  //   });
+  const submitForm = () => {
+    Keyboard.dismiss();
+    setIsShowKeyboard(true);
+    console.log(data);
+    setData(initialState);
+  };
 
-  //   console.log(focusEmail);
-
-  return (
+  return isReady ? (
+    <AppLoading startAsync={loadFonts} onFinish={() => setIsReady(true)} />
+  ) : (
     <TouchableWithoutFeedback onPress={touch}>
       <View style={styles.container}>
         <ImageBackground
@@ -98,6 +133,10 @@ export function RegistrationScreen() {
                     placeholder="Login"
                     onBlur={onBlur}
                     onFocus={onFocusLogin}
+                    value={data.login}
+                    onChangeText={(value) =>
+                      setData((prevData) => ({ ...prevData, login: value }))
+                    }
                   />
                 </View>
                 <View>
@@ -106,6 +145,10 @@ export function RegistrationScreen() {
                     placeholder="Email"
                     onBlur={onBlur}
                     onFocus={onFocusEmail}
+                    value={data.email}
+                    onChangeText={(value) =>
+                      setData((prevData) => ({ ...prevData, email: value }))
+                    }
                   />
                 </View>
                 <View>
@@ -115,6 +158,10 @@ export function RegistrationScreen() {
                     secureTextEntry={showPassword}
                     onBlur={onBlur}
                     onFocus={onFocusPassword}
+                    value={data.password}
+                    onChangeText={(value) =>
+                      setData((prevData) => ({ ...prevData, password: value }))
+                    }
                   />
                   <TouchableOpacity
                     style={styles.show}
@@ -123,7 +170,10 @@ export function RegistrationScreen() {
                     <Text style={styles.showText}>Show</Text>
                   </TouchableOpacity>
                 </View>
-                <TouchableOpacity style={styles.registrationBtn}>
+                <TouchableOpacity
+                  style={styles.registrationBtn}
+                  onPress={submitForm}
+                >
                   <Text style={styles.registrationTitle}>Registration</Text>
                 </TouchableOpacity>
 
@@ -196,7 +246,7 @@ const styles = StyleSheet.create({
     fontWeight: 500,
     marginBottom: 16,
     // color: "#f0f8ff",
-    // fontFamily: "DMMono-Regular",
+    fontFamily: "Roboto-Regulat",
   },
 
   input: {
@@ -209,6 +259,7 @@ const styles = StyleSheet.create({
     marginTop: 16,
     fontSize: 16,
     lineHeight: 19,
+    fontFamily: "Roboto-Regulat",
 
     color: "#212121",
   },
@@ -235,6 +286,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 19,
     color: "#fff",
+    fontFamily: "Roboto-Regulat",
   },
   show: {
     position: "absolute",
@@ -246,6 +298,7 @@ const styles = StyleSheet.create({
     color: "#1B4371",
     fontSize: 16,
     lineHeight: 18.75,
+    fontFamily: "Roboto-Regulat",
   },
 
   enterText: {
@@ -254,5 +307,6 @@ const styles = StyleSheet.create({
     color: "#1B4371",
     fontSize: 16,
     lineHeight: 18.75,
+    fontFamily: "Roboto-Regulat",
   },
 });

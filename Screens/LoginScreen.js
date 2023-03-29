@@ -6,30 +6,43 @@ import {
   ImageBackground,
   TextInput,
   TouchableOpacity,
-  Image,
   TouchableWithoutFeedback,
   Keyboard,
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
 
-export function LaginForm() {
-  const [focusLogin, setFocusLogin] = useState("#e8e8e8");
+import { useFonts } from "expo-font";
+import AppLoading from "expo-app-loading";
+
+initialState = {
+  email: "",
+  password: "",
+};
+
+// const loadFonts = async () => {
+//   await Font.loadAsync({
+// "Roboto-Regulat": require("../assets/fonts/Roboto-Regular.ttf"),
+// "Roboto-Bold": require("../assets/fonts/Roboto-Bold.ttf"),
+//   });
+// };
+
+export function LoginForm() {
   const [focusEmail, setFocusEmail] = useState("#e8e8e8");
   const [focusPassword, setFocusPassword] = useState("#e8e8e8");
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(true);
   const [isShowKeyboard, setIsShowKeyboard] = useState(false);
+  const [data, setData] = useState(initialState);
+  //   const [isReady, setIsReady] = useState(false);
+  let [fontsLoaded] = useFonts({
+    "Roboto-Regulat": require("../assets/fonts/Roboto-Regular.ttf"),
+    "Roboto-Bold": require("../assets/fonts/Roboto-Bold.ttf"),
+  });
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
 
-  const onFocusLogin = () => {
-    setFocusLogin("#ff6c00");
-
-    setIsShowKeyboard(true);
-    // Keyboard.dismiss();
-  };
   const onFocusEmail = () => {
     setFocusEmail("#ff6c00");
     setIsShowKeyboard(true);
@@ -39,7 +52,6 @@ export function LaginForm() {
     setIsShowKeyboard(true);
   };
   const onBlur = () => {
-    setFocusLogin("#e8e8e8");
     setFocusEmail("#e8e8e8");
     setFocusPassword("#e8e8e8");
     setIsShowKeyboard(true);
@@ -50,13 +62,16 @@ export function LaginForm() {
     setIsShowKeyboard(true);
   };
 
-  //   useEffect(() => {
-  //     if (focusEmail === "#e8e8e8") {
-  //       setIsShowKeyboard(true);
-  //     }
-  //   });
+  const submitForm = () => {
+    Keyboard.dismiss();
+    setIsShowKeyboard(true);
+    console.log(data);
+    setData(initialState);
+  };
 
-  //   console.log(focusEmail);
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  }
 
   return (
     <TouchableWithoutFeedback onPress={touch}>
@@ -84,6 +99,10 @@ export function LaginForm() {
                     placeholder="Email"
                     onBlur={onBlur}
                     onFocus={onFocusEmail}
+                    value={data.email}
+                    onChangeText={(value) =>
+                      setData((prevData) => ({ ...prevData, email: value }))
+                    }
                   />
                 </View>
                 <View>
@@ -93,6 +112,10 @@ export function LaginForm() {
                     secureTextEntry={showPassword}
                     onBlur={onBlur}
                     onFocus={onFocusPassword}
+                    value={data.password}
+                    onChangeText={(value) =>
+                      setData((prevData) => ({ ...prevData, password: value }))
+                    }
                   />
                   <TouchableOpacity
                     style={styles.show}
@@ -101,7 +124,10 @@ export function LaginForm() {
                     <Text style={styles.showText}>Show</Text>
                   </TouchableOpacity>
                 </View>
-                <TouchableOpacity style={styles.registrationBtn}>
+                <TouchableOpacity
+                  style={styles.registrationBtn}
+                  onPress={submitForm}
+                >
                   <Text style={styles.registrationTitle}>Log In</Text>
                 </TouchableOpacity>
 
@@ -161,7 +187,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     color: "#212121",
 
-    // fontFamily: "DMMono-Regular",
+    fontFamily: "Roboto-Regulat",
   },
 
   input: {
@@ -174,6 +200,7 @@ const styles = StyleSheet.create({
     marginTop: 16,
     fontSize: 16,
     lineHeight: 19,
+    fontFamily: "Roboto-Regulat",
 
     color: "#212121",
   },
@@ -200,6 +227,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 19,
     color: "#fff",
+    fontFamily: "Roboto-Regulat",
   },
   show: {
     position: "absolute",
@@ -211,6 +239,7 @@ const styles = StyleSheet.create({
     color: "#1B4371",
     fontSize: 16,
     lineHeight: 18.75,
+    fontFamily: "Roboto-Regulat",
   },
 
   enterText: {
@@ -219,5 +248,6 @@ const styles = StyleSheet.create({
     color: "#1B4371",
     fontSize: 16,
     lineHeight: 18.75,
+    fontFamily: "Roboto-Regulat",
   },
 });
