@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
+
 import {
   StyleSheet,
   Text,
@@ -13,19 +14,12 @@ import {
 } from "react-native";
 
 import { useFonts } from "expo-font";
-import AppLoading from "expo-app-loading";
+import * as SplashScreen from "expo-splash-screen";
 
 initialState = {
   email: "",
   password: "",
 };
-
-// const loadFonts = async () => {
-//   await Font.loadAsync({
-// "Roboto-Regulat": require("../assets/fonts/Roboto-Regular.ttf"),
-// "Roboto-Bold": require("../assets/fonts/Roboto-Bold.ttf"),
-//   });
-// };
 
 export function LoginForm() {
   const [focusEmail, setFocusEmail] = useState("#e8e8e8");
@@ -33,11 +27,16 @@ export function LoginForm() {
   const [showPassword, setShowPassword] = useState(true);
   const [isShowKeyboard, setIsShowKeyboard] = useState(false);
   const [data, setData] = useState(initialState);
-  //   const [isReady, setIsReady] = useState(false);
   let [fontsLoaded] = useFonts({
     "Roboto-Regulat": require("../assets/fonts/Roboto-Regular.ttf"),
     "Roboto-Bold": require("../assets/fonts/Roboto-Bold.ttf"),
   });
+
+  const onLayoutRootView = useCallback(async () => {
+    if (fontsLoaded) {
+      await SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded]);
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -69,13 +68,9 @@ export function LoginForm() {
     setData(initialState);
   };
 
-  if (!fontsLoaded) {
-    return <AppLoading />;
-  }
-
   return (
     <TouchableWithoutFeedback onPress={touch}>
-      <View style={styles.container}>
+      <View style={styles.container} onLayout={onLayoutRootView}>
         <ImageBackground
           style={styles.image}
           source={require("../assets/images/photo-bgr.jpg")}

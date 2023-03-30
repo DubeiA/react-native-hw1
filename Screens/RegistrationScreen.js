@@ -41,19 +41,6 @@ export function RegistrationScreen() {
   const [data, setData] = useState(initialState);
   const [isReady, setIsReady] = useState(false);
 
-  //   let [fontsLoaded] = useFonts({
-  //     "Roboto-Regulat": require("../assets/fonts/Roboto-Regular.ttf"),
-  //     "Roboto-Bold": require("../assets/fonts/Roboto-Bold.ttf"),
-  //   });
-
-  //  if (!fontsLoaded) {
-  //    return null;
-  // }
-
-  // useEffect(() => {
-  //     asy
-  // })
-
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
@@ -62,7 +49,6 @@ export function RegistrationScreen() {
     setFocusLogin("#ff6c00");
 
     setIsShowKeyboard(true);
-    // Keyboard.dismiss();
   };
   const onFocusEmail = () => {
     setFocusEmail("#ff6c00");
