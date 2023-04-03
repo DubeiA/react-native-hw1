@@ -1,5 +1,4 @@
-import { useState, useCallback } from "react";
-
+import { useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -7,41 +6,39 @@ import {
   ImageBackground,
   TextInput,
   TouchableOpacity,
+  Image,
   TouchableWithoutFeedback,
   Keyboard,
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
 
-import { useFonts } from "expo-font";
-import * as SplashScreen from "expo-splash-screen";
-
 initialState = {
+  login: "",
   email: "",
   password: "",
 };
 
-export function LoginForm() {
+export function RegistrationScreen({ navigation }) {
+  const [focusLogin, setFocusLogin] = useState("#e8e8e8");
   const [focusEmail, setFocusEmail] = useState("#e8e8e8");
   const [focusPassword, setFocusPassword] = useState("#e8e8e8");
   const [showPassword, setShowPassword] = useState(true);
   const [isShowKeyboard, setIsShowKeyboard] = useState(false);
+  const [image, setImage] = useState(
+    require("../../assets/images/Rectangle.jpg")
+  );
   const [data, setData] = useState(initialState);
-  let [fontsLoaded] = useFonts({
-    "Roboto-Regulat": require("../assets/fonts/Roboto-Regular.ttf"),
-    "Roboto-Bold": require("../assets/fonts/Roboto-Bold.ttf"),
-  });
-
-  const onLayoutRootView = useCallback(async () => {
-    if (fontsLoaded) {
-      await SplashScreen.hideAsync();
-    }
-  }, [fontsLoaded]);
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
 
+  const onFocusLogin = () => {
+    setFocusLogin("#ff6c00");
+
+    setIsShowKeyboard(true);
+  };
   const onFocusEmail = () => {
     setFocusEmail("#ff6c00");
     setIsShowKeyboard(true);
@@ -51,6 +48,7 @@ export function LoginForm() {
     setIsShowKeyboard(true);
   };
   const onBlur = () => {
+    setFocusLogin("#e8e8e8");
     setFocusEmail("#e8e8e8");
     setFocusPassword("#e8e8e8");
     setIsShowKeyboard(true);
@@ -68,26 +66,59 @@ export function LoginForm() {
     setData(initialState);
   };
 
+  const navigateTo = () => {
+    navigation.navigate("Login");
+    setIsShowKeyboard(true);
+  };
+
   return (
     <TouchableWithoutFeedback onPress={touch}>
-      <View style={styles.container} onLayout={onLayoutRootView}>
+      <View style={styles.container}>
         <ImageBackground
           style={styles.image}
-          source={require("../assets/images/photo-bgr.jpg")}
+          source={require("../../assets/images/photo-bgr.jpg")}
         >
           <KeyboardAvoidingView
             behavior={Platform.OS == "ios" ? "padding" : "height"}
           >
             <View
-              style={{
-                ...styles.containerRegister,
-                marginBottom: isShowKeyboard ? 0 : 60,
-              }}
+              style={[
+                styles.containerRegister,
+                { marginBottom: isShowKeyboard ? 0 : 120 },
+              ]}
             >
+              <View style={styles.containerFoto}>
+                <Image style={styles.foto} source={image} />
+                <TouchableOpacity>
+                  {image ? (
+                    <Image
+                      style={styles.closeBtn}
+                      source={require("../../assets/images/close.png")}
+                    />
+                  ) : (
+                    <Image
+                      style={styles.addBtn}
+                      source={require("../../assets/images/add.png")}
+                    />
+                  )}
+                </TouchableOpacity>
+              </View>
               <View style={styles.header}>
-                <Text style={styles.headerTitle}>Log In</Text>
+                <Text style={styles.headerTitle}>Registration</Text>
               </View>
               <View style={styles.form}>
+                <View>
+                  <TextInput
+                    style={[styles.input, { borderColor: focusLogin }]}
+                    placeholder="Login"
+                    onBlur={onBlur}
+                    onFocus={onFocusLogin}
+                    value={data.login}
+                    onChangeText={(value) =>
+                      setData((prevData) => ({ ...prevData, login: value }))
+                    }
+                  />
+                </View>
                 <View>
                   <TextInput
                     style={[styles.input, { borderColor: focusEmail }]}
@@ -123,13 +154,13 @@ export function LoginForm() {
                   style={styles.registrationBtn}
                   onPress={submitForm}
                 >
-                  <Text style={styles.registrationTitle}>Log In</Text>
+                  <Text style={styles.registrationTitle}>Registration</Text>
                 </TouchableOpacity>
 
                 <View>
-                  <TouchableOpacity style={styles.enter}>
+                  <TouchableOpacity style={styles.enter} onPress={navigateTo}>
                     <Text style={styles.enterText}>
-                      Don't have an account? Registration
+                      Already have an account? Log in
                     </Text>
                   </TouchableOpacity>
                 </View>
@@ -149,9 +180,23 @@ const styles = StyleSheet.create({
   },
   image: {
     flex: 1,
-    resizeMode: "contain",
+    resizeMode: "cover",
     justifyContent: "flex-end",
     // alignItems: "center",
+  },
+  containerFoto: {
+    position: "relative",
+    zIndex: 2,
+    top: -60,
+    backgroundColor: "#F6F6F6",
+    marginLeft: "auto",
+    marginRight: "auto",
+    borderTopRightRadius: 16,
+    borderTopLeftRadius: 16,
+  },
+  foto: {
+    borderRadius: 16,
+    // position: "relative",
   },
 
   addBtn: {
@@ -161,28 +206,38 @@ const styles = StyleSheet.create({
     bottom: 13,
     right: -12,
   },
+
+  closeBtn: {
+    position: "absolute",
+    alignItems: "center",
+    width: 25,
+    bottom: 13,
+    right: -12,
+    // transform: [{ rotate: "45deg" }],
+  },
   containerRegister: {
+    // justifyContent: "center",
     // flex: 1,
-    height: 450,
+    height: 500,
     backgroundColor: "#fff",
     borderTopRightRadius: 25,
     borderTopLeftRadius: 25,
+    // marginBottom: 0,
   },
   header: {
     alignItems: "center",
-    marginTop: 32,
-
+    marginTop: -40,
+    color: "#212121",
     // marginBottom: 120,
   },
   headerTitle: {
     fontSize: 30,
     lineHeight: 35,
-
+    letterSpacing: 0.01,
     fontWeight: 500,
     marginBottom: 16,
-    color: "#212121",
-
-    fontFamily: "Roboto-Regulat",
+    // color: "#f0f8ff",
+    // fontFamily: "Montserrat-Bold",
   },
 
   input: {
@@ -195,7 +250,7 @@ const styles = StyleSheet.create({
     marginTop: 16,
     fontSize: 16,
     lineHeight: 19,
-    fontFamily: "Roboto-Regulat",
+    // fontFamily: "Montserrat-Regulat",
 
     color: "#212121",
   },
@@ -222,7 +277,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 19,
     color: "#fff",
-    fontFamily: "Roboto-Regulat",
+    // fontFamily: "Montserrat-Regulat",
   },
   show: {
     position: "absolute",
@@ -234,7 +289,7 @@ const styles = StyleSheet.create({
     color: "#1B4371",
     fontSize: 16,
     lineHeight: 18.75,
-    fontFamily: "Roboto-Regulat",
+    // fontFamily: "Montserrat-Regulat",
   },
 
   enterText: {
@@ -243,6 +298,6 @@ const styles = StyleSheet.create({
     color: "#1B4371",
     fontSize: 16,
     lineHeight: 18.75,
-    fontFamily: "Roboto-Regulat",
+    // fontFamily: "Montserrat-Regulat",
   },
 });
