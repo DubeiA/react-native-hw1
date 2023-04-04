@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { DataContext } from "../Context";
 import {
   StyleSheet,
   Text,
@@ -13,7 +14,7 @@ import {
   Platform,
 } from "react-native";
 
-initialState = {
+const registration = {
   login: "",
   email: "",
   password: "",
@@ -28,7 +29,8 @@ export function RegistrationScreen({ navigation }) {
   const [image, setImage] = useState(
     require("../../assets/images/Rectangle.jpg")
   );
-  const [data, setData] = useState(initialState);
+  const [data, setData] = useState(registration);
+  const { formSubmitHandler } = useContext(DataContext);
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -62,8 +64,14 @@ export function RegistrationScreen({ navigation }) {
   const submitForm = () => {
     Keyboard.dismiss();
     setIsShowKeyboard(true);
-    console.log(data);
-    setData(initialState);
+    formSubmitHandler(data);
+    // console.log(data);
+    navigation.navigate("Home", {
+      login: data.login,
+      password: data.password,
+      email: data.email,
+    });
+    setData(registration);
   };
 
   const navigateTo = () => {

@@ -1,4 +1,5 @@
-import { useState, useCallback } from "react";
+import { useState, useContext } from "react";
+import { DataContext } from "../Context";
 
 import {
   StyleSheet,
@@ -13,7 +14,7 @@ import {
   Platform,
 } from "react-native";
 
-initialState = {
+const login = {
   email: "",
   password: "",
 };
@@ -23,7 +24,9 @@ export function LoginScreen({ navigation }) {
   const [focusPassword, setFocusPassword] = useState("#e8e8e8");
   const [showPassword, setShowPassword] = useState(true);
   const [isShowKeyboard, setIsShowKeyboard] = useState(false);
-  const [data, setData] = useState(initialState);
+  const [data, setData] = useState(login);
+
+  const { formSubmitHandler } = useContext(DataContext);
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -51,10 +54,14 @@ export function LoginScreen({ navigation }) {
   const submitForm = () => {
     Keyboard.dismiss();
     setIsShowKeyboard(true);
-    console.log(data);
+    formSubmitHandler(data);
+    // console.log(data);
     // useRoute(false);
-    // navigation.navigate("Posts", data);
-    setData(initialState);
+    navigation.navigate("Home", {
+      email: data.email,
+      password: data.password,
+    });
+    setData(login);
   };
 
   const navigateTo = () => {
