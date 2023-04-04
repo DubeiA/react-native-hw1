@@ -184,9 +184,26 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     // alignItems: "center",
   },
+
+  containerRegister: {
+    justifyContent: "center",
+
+    // flex: 1,
+    height: 500,
+    backgroundColor: "#fff",
+    borderTopRightRadius: 25,
+    borderTopLeftRadius: 25,
+    marginBottom: 0,
+  },
+  header: {
+    alignItems: "center",
+    marginTop: -40,
+    color: "#212121",
+    // marginBottom: 120,
+  },
   containerFoto: {
-    position: "relative",
-    zIndex: 2,
+    // position: "relative",
+    // zIndex: 2,
     top: -60,
     backgroundColor: "#F6F6F6",
     marginLeft: "auto",
@@ -214,21 +231,6 @@ const styles = StyleSheet.create({
     bottom: 13,
     right: -12,
     // transform: [{ rotate: "45deg" }],
-  },
-  containerRegister: {
-    // justifyContent: "center",
-    // flex: 1,
-    height: 500,
-    backgroundColor: "#fff",
-    borderTopRightRadius: 25,
-    borderTopLeftRadius: 25,
-    // marginBottom: 0,
-  },
-  header: {
-    alignItems: "center",
-    marginTop: -40,
-    color: "#212121",
-    // marginBottom: 120,
   },
   headerTitle: {
     fontSize: 30,

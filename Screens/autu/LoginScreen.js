@@ -13,9 +13,6 @@ import {
   Platform,
 } from "react-native";
 
-// import { useFonts } from "expo-font";
-// import * as SplashScreen from "expo-splash-screen";
-
 initialState = {
   email: "",
   password: "",
@@ -27,16 +24,6 @@ export function LoginScreen({ navigation }) {
   const [showPassword, setShowPassword] = useState(true);
   const [isShowKeyboard, setIsShowKeyboard] = useState(false);
   const [data, setData] = useState(initialState);
-  // let [fontsLoaded] = useFonts({
-  //   "Montserrat-Regular": require("../assets/fonts/Montserrat-Regular.ttf"),
-  //   "Montserrat-Bold": require("../assets/fonts/Montserrat-Bold.ttf"),
-  // });
-
-  // const onLayoutRootView = useCallback(async () => {
-  //   if (fontsLoaded) {
-  //     await SplashScreen.hideAsync();
-  //   }
-  // }, [fontsLoaded]);
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -65,12 +52,14 @@ export function LoginScreen({ navigation }) {
     Keyboard.dismiss();
     setIsShowKeyboard(true);
     console.log(data);
+    // useRoute(false);
+    // navigation.navigate("Posts", data);
     setData(initialState);
   };
 
   const navigateTo = () => {
     navigation.navigate("Registration");
-    setIsShowKeyboard(false);
+    setIsShowKeyboard(true);
   };
 
   return (
@@ -86,7 +75,7 @@ export function LoginScreen({ navigation }) {
             <View
               style={{
                 ...styles.containerRegister,
-                marginBottom: isShowKeyboard ? 0 : 60,
+                marginBottom: isShowKeyboard ? 1 : 60,
               }}
             >
               <View style={styles.header}>

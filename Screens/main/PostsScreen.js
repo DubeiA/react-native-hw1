@@ -1,10 +1,13 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 
-const PostsScreen = () => {
+const PostsScreen = ({ navigation, route }) => {
+  // const data = route.params;
+  // console.log(data);
   return (
     <View style={styles.container}>
       <Text>Posts Screen</Text>
+      {/* <Text> {data} </Text> */}
     </View>
   );
 };
