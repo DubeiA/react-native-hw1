@@ -1,5 +1,6 @@
-import { useState, useContext } from "react";
-import { DataContext } from "../Context";
+import { useState } from "react";
+
+import { useUser } from "../Context";
 
 import {
   StyleSheet,
@@ -26,7 +27,7 @@ export function LoginScreen({ navigation }) {
   const [isShowKeyboard, setIsShowKeyboard] = useState(false);
   const [data, setData] = useState(login);
 
-  const { formSubmitHandler } = useContext(DataContext);
+  const { logIn } = useUser();
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -54,13 +55,9 @@ export function LoginScreen({ navigation }) {
   const submitForm = () => {
     Keyboard.dismiss();
     setIsShowKeyboard(true);
-    formSubmitHandler(data);
-    // console.log(data);
-    // useRoute(false);
-    navigation.navigate("Home", {
-      email: data.email,
-      password: data.password,
-    });
+    logIn(data);
+
+    navigation.navigate("Home");
     setData(login);
   };
 

@@ -1,5 +1,5 @@
-import { useEffect, useState, useContext } from "react";
-import { DataContext } from "../Context";
+import { useEffect, useState } from "react";
+import { useUser } from "../Context";
 import {
   StyleSheet,
   Text,
@@ -30,7 +30,8 @@ export function RegistrationScreen({ navigation }) {
     require("../../assets/images/Rectangle.jpg")
   );
   const [data, setData] = useState(registration);
-  const { formSubmitHandler } = useContext(DataContext);
+
+  const { logIn } = useUser();
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -64,13 +65,9 @@ export function RegistrationScreen({ navigation }) {
   const submitForm = () => {
     Keyboard.dismiss();
     setIsShowKeyboard(true);
-    formSubmitHandler(data);
-    // console.log(data);
-    navigation.navigate("Home", {
-      login: data.login,
-      password: data.password,
-      email: data.email,
-    });
+    logIn(data);
+
+    navigation.navigate("Home");
     setData(registration);
   };
 

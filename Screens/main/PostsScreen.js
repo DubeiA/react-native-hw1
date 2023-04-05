@@ -1,13 +1,17 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 
-const PostsScreen = ({ navigation, route }) => {
+import { useUser } from "../Context";
+
+const PostsScreen = () => {
+  const { username } = useUser();
+  console.log("Posts-username", username);
   // const data = route.params;
-  // console.log(data);
+  // console.log("Posts", roure);
   return (
     <View style={styles.container}>
       <Text>Posts Screen</Text>
-      {/* <Text> {data} </Text> */}
+      <Text> {username.email} </Text>
     </View>
   );
 };
@@ -17,6 +21,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor: "#e5e5e5",
   },
 });
 
