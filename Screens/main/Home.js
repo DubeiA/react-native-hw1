@@ -33,6 +33,7 @@ export const Home = ({ navigation, route }) => {
           paddingHorizontal: 65,
           // paddingBottom: 30,
           // justifyContent: "space-evenly",
+          borderTopWidth: 1,
         },
       })}
     >
