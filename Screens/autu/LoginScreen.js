@@ -25,6 +25,8 @@ export function LoginScreen({ navigation }) {
   const [focusPassword, setFocusPassword] = useState("#e8e8e8");
   const [showPassword, setShowPassword] = useState(true);
   const [isShowKeyboard, setIsShowKeyboard] = useState(false);
+  const [isShowKeyboardIOS, setIsShowKeyboardIOS] = useState(true);
+
   const [data, setData] = useState(login);
 
   const { logIn } = useUser();
@@ -36,25 +38,30 @@ export function LoginScreen({ navigation }) {
   const onFocusEmail = () => {
     setFocusEmail("#ff6c00");
     setIsShowKeyboard(true);
+    setIsShowKeyboardIOS(false);
   };
   const onFocusPassword = () => {
     setFocusPassword("#ff6c00");
     setIsShowKeyboard(true);
+    setIsShowKeyboardIOS(false);
   };
   const onBlur = () => {
     setFocusEmail("#e8e8e8");
     setFocusPassword("#e8e8e8");
     setIsShowKeyboard(true);
+    setIsShowKeyboardIOS(true);
   };
 
   const touch = () => {
     Keyboard.dismiss();
     setIsShowKeyboard(true);
+    setIsShowKeyboardIOS(true);
   };
 
   const submitForm = () => {
     Keyboard.dismiss();
     setIsShowKeyboard(true);
+    setIsShowKeyboardIOS(true);
     logIn(data);
 
     navigation.navigate("Home");
@@ -64,6 +71,7 @@ export function LoginScreen({ navigation }) {
   const navigateTo = () => {
     navigation.navigate("Registration");
     setIsShowKeyboard(true);
+    setIsShowKeyboardIOS(true);
   };
 
   return (
@@ -77,10 +85,17 @@ export function LoginScreen({ navigation }) {
             behavior={Platform.OS == "ios" ? "padding" : "height"}
           >
             <View
-              style={{
-                ...styles.containerRegister,
-                marginBottom: isShowKeyboard ? 1 : 60,
-              }}
+              style={
+                Platform.OS === "ios"
+                  ? {
+                      ...styles.containerRegister,
+                      height: isShowKeyboardIOS ? 500 : 250,
+                    }
+                  : {
+                      ...styles.containerRegister,
+                      marginBottom: isShowKeyboard ? 1 : 60,
+                    }
+              }
             >
               <View style={styles.header}>
                 <Text style={styles.headerTitle}>Log In</Text>

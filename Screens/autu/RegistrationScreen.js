@@ -26,6 +26,7 @@ export function RegistrationScreen({ navigation }) {
   const [focusPassword, setFocusPassword] = useState("#e8e8e8");
   const [showPassword, setShowPassword] = useState(true);
   const [isShowKeyboard, setIsShowKeyboard] = useState(false);
+  const [isShowKeyboardIOS, setIsShowKeyboardIOS] = useState(true);
   const [image, setImage] = useState(
     require("../../assets/images/Rectangle.jpg")
   );
@@ -39,15 +40,17 @@ export function RegistrationScreen({ navigation }) {
 
   const onFocusLogin = () => {
     setFocusLogin("#ff6c00");
-
+    setIsShowKeyboardIOS(false);
     setIsShowKeyboard(true);
   };
   const onFocusEmail = () => {
     setFocusEmail("#ff6c00");
     setIsShowKeyboard(true);
+    setIsShowKeyboardIOS(false);
   };
   const onFocusPassword = () => {
     setFocusPassword("#ff6c00");
+    setIsShowKeyboardIOS(false);
     setIsShowKeyboard(true);
   };
   const onBlur = () => {
@@ -55,15 +58,18 @@ export function RegistrationScreen({ navigation }) {
     setFocusEmail("#e8e8e8");
     setFocusPassword("#e8e8e8");
     setIsShowKeyboard(true);
+    setIsShowKeyboardIOS(true);
   };
 
   const touch = () => {
     Keyboard.dismiss();
     setIsShowKeyboard(true);
+    setIsShowKeyboardIOS(true);
   };
 
   const submitForm = () => {
     Keyboard.dismiss();
+    setIsShowKeyboardIOS(true);
     setIsShowKeyboard(true);
     logIn(data);
 
@@ -73,9 +79,10 @@ export function RegistrationScreen({ navigation }) {
 
   const navigateTo = () => {
     navigation.navigate("Login");
+    setIsShowKeyboardIOS(true);
     setIsShowKeyboard(true);
   };
-
+  console.log(Platform);
   return (
     <TouchableWithoutFeedback onPress={touch}>
       <View style={styles.container}>
@@ -87,10 +94,17 @@ export function RegistrationScreen({ navigation }) {
             behavior={Platform.OS == "ios" ? "padding" : "height"}
           >
             <View
-              style={[
-                styles.containerRegister,
-                { marginBottom: isShowKeyboard ? 0 : 120 },
-              ]}
+              style={
+                Platform.OS === "ios"
+                  ? {
+                      ...styles.containerRegister,
+                      height: isShowKeyboardIOS ? 600 : 350,
+                    }
+                  : {
+                      ...styles.containerRegister,
+                      marginBottom: isShowKeyboard ? 1 : 120,
+                    }
+              }
             >
               <View style={styles.containerFoto}>
                 <Image style={styles.foto} source={image} />
