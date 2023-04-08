@@ -82,7 +82,7 @@ export function RegistrationScreen({ navigation }) {
     setIsShowKeyboardIOS(true);
     setIsShowKeyboard(true);
   };
-  console.log(Platform);
+
   return (
     <TouchableWithoutFeedback onPress={touch}>
       <View style={styles.container}>

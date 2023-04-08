@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Platform } from "react-native";
 import { CustomBtn } from "./CustomBtn";
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -27,7 +27,16 @@ export const Home = ({ navigation, route }) => {
     <Tab.Navigator
       screenOptions={({ route }) => ({
         tabBarStyle: {
-          height: 75,
+          ...Platform.select({
+            ios: {
+              height: 100,
+            },
+            android: {
+              height: 70,
+            },
+          }),
+
+          // height: 100,
 
           backgroundColor: "#fff",
           paddingHorizontal: 65,
@@ -42,6 +51,7 @@ export const Home = ({ navigation, route }) => {
           headerTitleAlign: "center",
           headerStyle: {
             borderBottomWidth: 1,
+            backgroundColor: "#e8e8e8",
           },
           headerTitleStyle: {
             fontSize: 17,
@@ -58,6 +68,7 @@ export const Home = ({ navigation, route }) => {
           tabBarShowLabel: false,
           tabBarActiveTintColor: "#ffffff",
           tabBarActiveBackgroundColor: "#ff6c00",
+
           tabBarItemStyle: {
             // borderWidth: 1,
             borderRadius: 70,
@@ -76,6 +87,7 @@ export const Home = ({ navigation, route }) => {
       <Tab.Screen
         options={{
           headerStyle: {
+            backgroundColor: "#e8e8e8",
             borderBottomWidth: 1,
           },
           headerTitleStyle: {
@@ -87,6 +99,7 @@ export const Home = ({ navigation, route }) => {
           headerTitleAlign: "center",
 
           tabBarShowLabel: false,
+          tabBarHideOnKeyboard: true,
           tabBarActiveTintColor: "#ffffff",
           tabBarActiveBackgroundColor: "#ff6c00",
           tabBarItemStyle: {
@@ -106,6 +119,7 @@ export const Home = ({ navigation, route }) => {
       <Tab.Screen
         options={{
           headerStyle: {
+            backgroundColor: "#e8e8e8",
             borderBottomWidth: 1,
           },
           headerTitleStyle: {
@@ -123,6 +137,7 @@ export const Home = ({ navigation, route }) => {
           tabBarShowLabel: false,
           tabBarActiveTintColor: "#ffffff",
           tabBarActiveBackgroundColor: "#ff6c00",
+          tabBarHideOnKeyboard: true,
           tabBarItemStyle: {
             // borderWidth: 1,
             borderRadius: 70,
