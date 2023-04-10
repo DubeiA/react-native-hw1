@@ -8,6 +8,7 @@ import {
   Image,
   TextInput,
   KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -20,7 +21,7 @@ const info = {
   locate: "",
 };
 
-const CreatePostsScreen = () => {
+const CreatePostsScreen = ({ navigation }) => {
   // const [isFotoAppload, setIsFotoAppload] = useState(false);
   const [hasPermission, setHasPermission] = useState(null);
   const [cameraRef, setCameraRef] = useState(null);
@@ -57,6 +58,13 @@ const CreatePostsScreen = () => {
 
   const reTakePic = async () => {
     // console.log(photo);
+    setPhoto(null);
+  };
+
+  const publishPhoto = () => {
+    navigation.navigate("Posts", { photo, infoPhoto });
+
+    setInfoPhoto(info);
     setPhoto(null);
   };
   return (
@@ -101,7 +109,7 @@ const CreatePostsScreen = () => {
           )}
         </Camera>
 
-        <View style={{}}>
+        <View>
           <TextInput
             style={styles.input}
             placeholder="Name"
@@ -116,12 +124,12 @@ const CreatePostsScreen = () => {
             }
           />
         </View>
-        <View style={{ marginTop: 70 }}>
+        <View style={styles.locationInput}>
           <EvilIcons
             name="location"
             size={30}
             color="#BDBDBD"
-            style={{ position: "absolute", top: 40, left: 10 }}
+            style={styles.locationIcon}
           />
           <TextInput
             style={[styles.input, { paddingLeft: 25 }]}
@@ -138,24 +146,17 @@ const CreatePostsScreen = () => {
           />
         </View>
 
-        <TouchableOpacity style={styles.publish}>
-          <Text style={{ color: "#fff" }}>Publish</Text>
+        <TouchableOpacity style={styles.publish} onPress={publishPhoto}>
+          <Text style={styles.publishBtnText}>Publish</Text>
         </TouchableOpacity>
 
-        <View
-          style={{
-            width: 50,
-            height: 50,
-            borderRadius: 25,
-            backgroundColor: "#bdbdbd",
-            justifyContent: "center",
-            alignItems: "center",
-            marginTop: 60,
-            marginLeft: "auto",
-            marginRight: "auto",
-          }}
-        >
-          <TouchableOpacity>
+        <View style={styles.deleteBtn}>
+          <TouchableOpacity
+            onPress={() => {
+              setPhoto(null);
+              setInfoPhoto(info);
+            }}
+          >
             <Ionicons name="trash-outline" size={24} color="#e8e8e8" />
           </TouchableOpacity>
         </View>
@@ -170,14 +171,28 @@ const styles = StyleSheet.create({
   },
 
   containerCamera: {
-    borderRadius: 20,
-    height: 200,
-    marginHorizontal: 16,
-    marginTop: 32,
+    ...Platform.select({
+      ios: {
+        borderRadius: 20,
+        height: 200,
+        marginHorizontal: 16,
+        marginTop: 32,
 
-    backgroundColor: "#e8e8e8",
-    justifyContent: "center",
-    alignItems: "center",
+        backgroundColor: "#e8e8e8",
+        justifyContent: "center",
+        alignItems: "center",
+      },
+      android: {
+        borderRadius: 20,
+        height: 160,
+        marginHorizontal: 16,
+        marginTop: 16,
+
+        backgroundColor: "#e8e8e8",
+        justifyContent: "center",
+        alignItems: "center",
+      },
+    }),
   },
 
   iconStylePosition: {
@@ -228,37 +243,119 @@ const styles = StyleSheet.create({
         alignItems: "center",
       },
       android: {
-        height: 200,
+        marginTop: 16,
+        height: 160,
         width: 378,
+        // borderRadius: 20,
         // marginLeft: 20,
       },
     }),
   },
 
   input: {
-    borderBottomWidth: 2,
+    ...Platform.select({
+      ios: {
+        borderBottomWidth: 2,
 
-    borderColor: "#e8e8e8",
-    height: 50,
-    marginHorizontal: 16,
+        borderColor: "#e8e8e8",
+        height: 50,
+        marginHorizontal: 16,
 
-    borderRadius: 8,
+        borderRadius: 8,
 
-    marginTop: 32,
-    fontSize: 16,
-    lineHeight: 19,
+        marginTop: 32,
+        fontSize: 16,
+        lineHeight: 19,
 
-    color: "#212121",
+        color: "#212121",
+      },
+      android: {
+        borderBottomWidth: 2,
+
+        borderColor: "#e8e8e8",
+        height: 50,
+        marginHorizontal: 16,
+
+        borderRadius: 8,
+
+        marginTop: 8,
+        fontSize: 16,
+        lineHeight: 19,
+
+        color: "#212121",
+      },
+    }),
+  },
+
+  locationInput: { marginTop: 70 },
+
+  locationIcon: {
+    ...Platform.select({
+      ios: {
+        position: "absolute",
+        top: 40,
+        left: 10,
+      },
+      android: {
+        position: "absolute",
+        top: 20,
+        left: 10,
+      },
+    }),
   },
 
   publish: {
-    backgroundColor: "#ff6c00",
-    height: 50,
-    marginTop: 120,
-    marginHorizontal: 30,
-    borderRadius: 25,
-    justifyContent: "center",
-    alignItems: "center",
+    ...Platform.select({
+      ios: {
+        backgroundColor: "#ff6c00",
+        height: 50,
+        marginTop: 120,
+        marginHorizontal: 50,
+        borderRadius: 25,
+        justifyContent: "center",
+        alignItems: "center",
+      },
+      android: {
+        backgroundColor: "#ff6c00",
+        height: 50,
+        marginTop: 100,
+        marginHorizontal: 60,
+        borderRadius: 25,
+        justifyContent: "center",
+        alignItems: "center",
+      },
+    }),
+  },
+
+  deleteBtn: {
+    ...Platform.select({
+      ios: {
+        width: 50,
+        height: 50,
+        borderRadius: 25,
+        backgroundColor: "#bdbdbd",
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: 60,
+        marginLeft: "auto",
+        marginRight: "auto",
+      },
+      android: {
+        width: 50,
+        height: 50,
+        borderRadius: 25,
+        backgroundColor: "#bdbdbd",
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: 60,
+        marginLeft: "auto",
+        marginRight: "auto",
+      },
+    }),
+  },
+
+  publishBtnText: {
+    color: "#fff",
   },
 });
 

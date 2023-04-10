@@ -255,7 +255,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     lineHeight: 35,
     letterSpacing: 0.01,
-    fontWeight: 500,
+    // fontWeight: 500,
     marginBottom: 16,
     // color: "#f0f8ff",
     // fontFamily: "Montserrat-Bold",

@@ -3,7 +3,8 @@ import { View, Text, StyleSheet, Image } from "react-native";
 
 import { useUser } from "../Context";
 
-const PostsScreen = () => {
+const PostsScreen = ({ route }) => {
+  console.log("route.params", route.params);
   const { username } = useUser();
   console.log("Posts-username", username);
   // const data = route.params;

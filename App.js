@@ -8,7 +8,7 @@ import { RegistrationScreen } from "./Screens/autu/RegistrationScreen";
 import { Home } from "./Screens/main/Home";
 
 import { UserProvider } from "./Screens/Context";
-
+<script src="http://localhost:8097"></script>;
 const Stack = createStackNavigator();
 
 export default function App() {
