@@ -10,6 +10,9 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
+
+import * as Location from "expo-location";
+
 import { Ionicons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
@@ -30,6 +33,9 @@ const CreatePostsScreen = ({ navigation }) => {
   const [infoPhoto, setInfoPhoto] = useState(info);
   const [type, setType] = useState(Camera.Constants.Type.back);
 
+  const [location, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
+
   // console.log(infoPhoto);
   useEffect(() => {
     (async () => {
@@ -39,6 +45,26 @@ const CreatePostsScreen = ({ navigation }) => {
       setHasPermission(status === "granted");
     })();
   }, []);
+
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        setErrorMsg("Permission to access location was denied");
+        return;
+      }
+
+      // let location = await Location.getCurrentPositionAsync({});
+      // setLocation(location);
+    })();
+  }, []);
+
+  let text = "Waiting..";
+  if (errorMsg) {
+    text = errorMsg;
+  } else if (location) {
+    text = JSON.stringify(location);
+  }
 
   if (hasPermission === null) {
     return <View />;
@@ -52,17 +78,21 @@ const CreatePostsScreen = ({ navigation }) => {
       const { uri } = await cameraRef.takePictureAsync();
       await MediaLibrary.createAssetAsync(uri);
       setPhoto(uri);
-      // console.log(photo);
+
+      const { coords } = await Location.getCurrentPositionAsync({});
+
+      setLocation(coords);
     }
   };
 
   const reTakePic = async () => {
     // console.log(photo);
     setPhoto(null);
+    setLocation(null);
   };
 
   const publishPhoto = () => {
-    navigation.navigate("Posts", { photo, infoPhoto });
+    navigation.navigate("Posts", { photo, infoPhoto, location });
 
     setInfoPhoto(info);
     setPhoto(null);
@@ -155,6 +185,7 @@ const CreatePostsScreen = ({ navigation }) => {
             onPress={() => {
               setPhoto(null);
               setInfoPhoto(info);
+              setLocation(null);
             }}
           >
             <Ionicons name="trash-outline" size={24} color="#e8e8e8" />

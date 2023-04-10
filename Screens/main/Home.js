@@ -9,20 +9,11 @@ import { Feather } from "@expo/vector-icons";
 
 const Tab = createBottomTabNavigator();
 
-import PostsScreen from "./PostsScreen";
+import { PostsScreenNavigate } from "./PostsScreenNavigate";
 import CreatePostsScreen from "./CreatePostsScreen";
 import ProfileScreen from "./ProfileScreen";
 
-// import { useUser } from "../Context";
-
-export const Home = ({ navigation, route }) => {
-  // const { login, email, password } = route.params;
-  // console.log("Home---", login, email, password);
-  // console.log(contacts);
-
-  // const { isLoggedIn, username, logIn, logOut } = useUser();
-  // console.log("Home-username", username);
-
+export const Home = () => {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -48,6 +39,9 @@ export const Home = ({ navigation, route }) => {
     >
       <Tab.Screen
         options={{
+          headerBackVisible: true,
+          headerShown: false,
+          title: "Posts",
           headerTitleAlign: "center",
           headerStyle: {
             borderBottomWidth: 1,
@@ -79,10 +73,9 @@ export const Home = ({ navigation, route }) => {
           tabBarIcon: ({ focused, color, size }) => (
             <SimpleLineIcons name="grid" size={size} color={color} />
           ),
-          headerRight: () => <CustomBtn navigation={navigation} />,
         }}
-        name="Posts"
-        component={PostsScreen}
+        name="PostsNavigate"
+        component={PostsScreenNavigate}
       />
       <Tab.Screen
         options={{
