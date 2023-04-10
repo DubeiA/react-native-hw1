@@ -93,10 +93,13 @@ const CreatePostsScreen = ({ navigation }) => {
 
   const publishPhoto = () => {
     console.log(location);
-    navigation.navigate("Posts", { photo, infoPhoto, location });
-
-    setInfoPhoto(info);
-    setPhoto(null);
+    if (photo) {
+      navigation.navigate("Posts", { photo, infoPhoto, location });
+      setInfoPhoto(info);
+      setPhoto(null);
+      return;
+    }
+    alert("make Foto");
   };
   return (
     <KeyboardAvoidingView
