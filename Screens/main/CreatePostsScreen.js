@@ -88,10 +88,11 @@ const CreatePostsScreen = ({ navigation }) => {
   const reTakePic = async () => {
     // console.log(photo);
     setPhoto(null);
-    setLocation(null);
+    // setLocation(null);
   };
 
   const publishPhoto = () => {
+    console.log(location);
     navigation.navigate("Posts", { photo, infoPhoto, location });
 
     setInfoPhoto(info);

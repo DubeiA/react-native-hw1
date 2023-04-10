@@ -9,12 +9,14 @@ import {
   TouchableOpacity,
 } from "react-native";
 
+import { EvilIcons } from "@expo/vector-icons";
+
 import { useUser } from "../Context";
 
 const PostsScreen = ({ navigation, route }) => {
-  console.log("route.params", route.params);
   const { username } = useUser();
-  // console.log("Posts-username", username);
+  const location = route.params;
+  //   console.log("Post Location", location);
 
   const [posts, setPosts] = useState([]);
   useEffect(() => {
@@ -62,15 +64,45 @@ const PostsScreen = ({ navigation, route }) => {
               source={{ uri: item.photo }}
               style={{ width: 350, height: 200, borderRadius: 10 }}
             ></Image>
-            <Text style={{}}>{item.infoPhoto.name}</Text>
+            <Text style={{ fontWeight: 500 }}>{item.infoPhoto.name}</Text>
             {/* <Text>{[item.location.latitude, item.location.longitude]}</Text> */}
-            <TouchableOpacity onPress={() => navigation.navigate("Map")}>
-              <Text> Map</Text>
-            </TouchableOpacity>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                marginTop: 10,
+              }}
+            >
+              <TouchableOpacity onPress={() => navigation.navigate("Comments")}>
+                <EvilIcons name="comment" size={24} color="#bdbdbd" />
+              </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => navigation.navigate("Comments")}>
-              <Text> Comments</Text>
-            </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => navigation.navigate("Map", { location })}
+              >
+                {item.infoPhoto.locate.length > 1 ? (
+                  <View style={{ borderBottomWidth: 1 }}>
+                    <EvilIcons
+                      name="location"
+                      size={30}
+                      color="#BDBDBD"
+                      style={styles.locationIcon}
+                    />
+                    <Text>{item.infoPhoto.locate}</Text>
+                  </View>
+                ) : (
+                  <View style={{ borderBottomWidth: 1 }}>
+                    <EvilIcons
+                      name="location"
+                      size={30}
+                      color="#BDBDBD"
+                      style={styles.locationIcon}
+                    />
+                    <Text>Location</Text>
+                  </View>
+                )}
+              </TouchableOpacity>
+            </View>
           </View>
         )}
       />
@@ -83,6 +115,12 @@ const styles = StyleSheet.create({
     flex: 1,
 
     backgroundColor: "#fff",
+  },
+
+  locationIcon: {
+    position: "absolute",
+    left: -30,
+    top: -6,
   },
 
   postContainer: {

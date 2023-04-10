@@ -12,6 +12,18 @@ export const PostsScreenNavigate = ({ navigation }) => {
     <PostStack.Navigator>
       <PostStack.Screen
         options={{
+          headerTitleAlign: "center",
+          headerStyle: {
+            borderBottomWidth: 1,
+            backgroundColor: "#e8e8e8",
+          },
+          headerTitleStyle: {
+            fontSize: 17,
+            lineHeight: 22,
+            fontWeight: 500,
+          },
+          headerTitle: { color: "#212121" },
+
           headerRight: () => <CustomBtn navigation={navigation} />,
           headerLeft: () => null,
         }}
