@@ -6,7 +6,7 @@ const MapScreen = ({ route }) => {
   // console.log("Map Route", route.params.location.location);
   const loc = route.params.location.location;
 
-  // console.log(location);
+  console.log(loc.latitude);
 
   return (
     <View style={styles.container}>

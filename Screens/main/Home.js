@@ -50,7 +50,6 @@ export const Home = () => {
           headerTitleStyle: {
             fontSize: 17,
             lineHeight: 22,
-            fontWeight: 500,
           },
           headerTitle: { color: "#212121" },
 
@@ -86,7 +85,6 @@ export const Home = () => {
           headerTitleStyle: {
             fontSize: 17,
             lineHeight: 22,
-            fontWeight: 500,
           },
           headerTitle: { color: "#212121" },
           headerTitleAlign: "center",
@@ -118,7 +116,6 @@ export const Home = () => {
           headerTitleStyle: {
             fontSize: 17,
             lineHeight: 22,
-            fontWeight: 500,
           },
           headerTitle: { color: "#212121" },
           headerTitleAlign: "center",

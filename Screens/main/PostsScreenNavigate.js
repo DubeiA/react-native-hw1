@@ -20,7 +20,6 @@ export const PostsScreenNavigate = ({ navigation }) => {
           headerTitleStyle: {
             fontSize: 17,
             lineHeight: 22,
-            fontWeight: 500,
           },
           headerTitle: { color: "#212121" },
 

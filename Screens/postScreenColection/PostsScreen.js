@@ -35,9 +35,9 @@ const PostsScreen = ({ navigation, route }) => {
         </View>
         <View style={styles.text}>
           {username.login ? (
-            <Text style={{ fontWeight: "bold" }}>{username.login}</Text>
+            <Text style={{}}>{username.login}</Text>
           ) : (
-            <Text style={{ fontWeight: "bold" }}>Example with Login</Text>
+            <Text style={{}}>Example with Login</Text>
           )}
           <Text style={{ right: 3 }}> {username.email} </Text>
         </View>
@@ -64,7 +64,7 @@ const PostsScreen = ({ navigation, route }) => {
               source={{ uri: item.photo }}
               style={{ width: 350, height: 200, borderRadius: 10 }}
             ></Image>
-            <Text style={{ fontWeight: 500 }}>{item.infoPhoto.name}</Text>
+            <Text style={{}}>{item.infoPhoto.name}</Text>
             {/* <Text>{[item.location.latitude, item.location.longitude]}</Text> */}
             <View
               style={{

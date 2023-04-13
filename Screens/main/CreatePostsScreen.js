@@ -54,8 +54,8 @@ const CreatePostsScreen = ({ navigation }) => {
         return;
       }
 
-      // let location = await Location.getCurrentPositionAsync({});
-      // setLocation(location);
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
     })();
   }, []);
 
@@ -78,11 +78,11 @@ const CreatePostsScreen = ({ navigation }) => {
       const { uri } = await cameraRef.takePictureAsync();
       await MediaLibrary.createAssetAsync(uri);
       setPhoto(uri);
-
-      const { coords } = await Location.getCurrentPositionAsync({});
-
-      setLocation(coords);
     }
+    const { coords } = await Location.getCurrentPositionAsync({});
+
+    setLocation(coords);
+    console.log("TakePicLoc", location);
   };
 
   const reTakePic = async () => {
