@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useUser } from "../Context";
+// import { useUser } from "../Context";
 import {
   StyleSheet,
   Text,
@@ -20,6 +20,11 @@ const registration = {
   password: "",
 };
 
+import { useSelector } from "react-redux";
+
+import { authSignUpUser } from "../../redux/auth/authOperation";
+import { useDispatch } from "react-redux/";
+
 export function RegistrationScreen({ navigation }) {
   const [focusLogin, setFocusLogin] = useState("#e8e8e8");
   const [focusEmail, setFocusEmail] = useState("#e8e8e8");
@@ -32,7 +37,12 @@ export function RegistrationScreen({ navigation }) {
   );
   const [data, setData] = useState(registration);
 
-  const { logIn } = useUser();
+  const dispatch = useDispatch();
+
+  const { userId } = useSelector((state) => state.auth);
+  // console.log("selector", userId);
+
+  // const { logIn } = useUser();
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -71,10 +81,17 @@ export function RegistrationScreen({ navigation }) {
     Keyboard.dismiss();
     setIsShowKeyboardIOS(true);
     setIsShowKeyboard(true);
-    logIn(data);
+    // logIn(data);
+    dispatch(authSignUpUser(data));
 
-    navigation.navigate("Home");
-    setData(registration);
+    if (data.email && data.password && data.login) {
+      navigation.navigate("Home");
+      setData(registration);
+
+      return;
+    }
+
+    alert("You have to write something");
   };
 
   const navigateTo = () => {

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { useUser } from "../Context";
+// import { useUser } from "../Context";
 
 import {
   StyleSheet,
@@ -14,6 +14,10 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
+
+import { useDispatch } from "react-redux";
+
+import { authSignInUser } from "../../redux/auth/authOperation";
 
 const login = {
   email: "",
@@ -29,7 +33,9 @@ export function LoginScreen({ navigation }) {
 
   const [data, setData] = useState(login);
 
-  const { logIn } = useUser();
+  const dispatch = useDispatch();
+
+  // const { logIn } = useUser();
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -62,10 +68,10 @@ export function LoginScreen({ navigation }) {
     Keyboard.dismiss();
     setIsShowKeyboard(true);
     setIsShowKeyboardIOS(true);
-    logIn(data);
-
+    // logIn(data);
+    dispatch(authSignInUser(data));
     navigation.navigate("Home");
-    setData(login);
+    // setData(login);
   };
 
   const navigateTo = () => {

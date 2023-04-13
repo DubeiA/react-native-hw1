@@ -11,12 +11,12 @@ import {
 
 import { EvilIcons } from "@expo/vector-icons";
 
-import { useUser } from "../Context";
+// import { useUser } from "../Context";
 
 const PostsScreen = ({ navigation, route }) => {
-  const { username } = useUser();
+  // const { username } = useUser();
   const location = route.params;
-  //   console.log("Post Location", location);
+  // console.log("Post Location", location);
 
   const [posts, setPosts] = useState([]);
   useEffect(() => {
@@ -34,12 +34,9 @@ const PostsScreen = ({ navigation, route }) => {
           />
         </View>
         <View style={styles.text}>
-          {username.login ? (
-            <Text style={{}}>{username.login}</Text>
-          ) : (
-            <Text style={{}}>Example with Login</Text>
-          )}
-          <Text style={{ right: 3 }}> {username.email} </Text>
+          <Text style={{}}>Example with Login</Text>
+
+          {/* <Text style={{ right: 3 }}> {location.email} </Text> */}
         </View>
       </View>
       <FlatList

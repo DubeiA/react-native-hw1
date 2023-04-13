@@ -1,13 +1,13 @@
 import { TouchableWithoutFeedback, StyleSheet, View } from "react-native";
 import { Feather } from "@expo/vector-icons";
 
-import { useUser } from "../Context";
+// import { useUser } from "../Context";
 
 export const CustomBtn = ({ navigation }) => {
-  const { logOut } = useUser();
+  // const { logOut } = useUser();
 
   const exit = () => {
-    logOut();
+    // logOut();
     navigation.navigate("Login");
   };
   return (

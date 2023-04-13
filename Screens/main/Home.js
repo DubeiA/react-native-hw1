@@ -1,6 +1,5 @@
 import React from "react";
 import { StyleSheet, Platform } from "react-native";
-import { CustomBtn } from "./CustomBtn";
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
@@ -13,7 +12,9 @@ import { PostsScreenNavigate } from "./PostsScreenNavigate";
 import CreatePostsScreen from "./CreatePostsScreen";
 import ProfileScreen from "./ProfileScreen";
 
-export const Home = () => {
+export const Home = ({ navigation, route }) => {
+  const data = route.params;
+  // console.log("Home", data);
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
