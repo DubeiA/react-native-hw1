@@ -2,6 +2,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   onAuthStateChanged,
+  signOut,
 } from "firebase/auth";
 import { auth } from "../../firebase/config";
 
@@ -45,26 +46,36 @@ const authSignInUser =
 //       console.log(error.message);
 //     }
 //   };
-const authSignOutUser = () => async (dispatch, getState) => {};
+// const authSignOutUser = () => async (dispatch, getState) => {
+//  await signOut(auth)
+//    .then(() => {
+//     navigation.navigate('Login')
+//    })
+//    .catch((error) => {
+//      console.log(error.code);
+//      console.log(error.message);
+//    });
+// };
 
 const authStateChangeUser = () => async (dispatch, getState) => {
   onAuthStateChanged(auth, (user) => {
     if (user) {
-      console.log("authState", user.displayName);
-      const userUpdateProfile = {
-        nickname: user.displayName,
-        userId: user.uid,
-      };
-
-      dispatch(authSlice.actions.updateUserProfile(userUpdateProfile));
+      console.log("auth2", user);
+      dispatch(
+        authSlice.actions.updateUserProfile({
+          nickname: user.displayName,
+          userId: user.uid,
+        })
+      );
+      console.log("auth3", user.displayName);
       dispatch(
         authSlice.actions.authStateChange({
           stateChange: true,
-          nickname: user.displayName,
+          // nickname: "n",
         })
       );
     }
   });
 };
 
-export { authSignInUser, authSignOutUser, authStateChangeUser };
+export { authSignInUser, authStateChangeUser };

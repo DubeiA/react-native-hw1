@@ -29,6 +29,7 @@ import {
   createUserWithEmailAndPassword,
   // signInWithEmailAndPassword,
   onAuthStateChanged,
+  updateProfile,
 } from "firebase/auth";
 import { auth } from "../../firebase/config";
 
@@ -90,19 +91,19 @@ export function RegistrationScreen({ navigation }) {
     ({ email, password, login }) =>
     async (dispatch, getState) => {
       try {
-        const { user } = await createUserWithEmailAndPassword(
-          auth,
-          email,
-          password
-        );
-        // await onAuthStateChanged(auth, (user) => {
-        //   user.displayName = login;
-        // });
+        await createUserWithEmailAndPassword(auth, email, password);
+
+        const user = auth.currentUser;
+        console.log("Register", user);
+
+        await updateProfile(user, {
+          displayName: login,
+        });
 
         dispatch(
           authSlice.actions.updateUserProfile({
             userId: user.uid,
-            nickname: login,
+            nickname: user.displayName,
           })
         );
 
