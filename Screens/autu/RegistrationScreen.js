@@ -22,8 +22,17 @@ const registration = {
 
 import { useSelector } from "react-redux";
 
-import { authSignUpUser } from "../../redux/auth/authOperation";
+// import { authSignUpUser } from "../../redux/auth/authOperation";
 import { useDispatch } from "react-redux/";
+
+import {
+  createUserWithEmailAndPassword,
+  // signInWithEmailAndPassword,
+  onAuthStateChanged,
+} from "firebase/auth";
+import { auth } from "../../firebase/config";
+
+import { authSlice } from "../../redux/auth/authSlice";
 
 export function RegistrationScreen({ navigation }) {
   const [focusLogin, setFocusLogin] = useState("#e8e8e8");
@@ -39,8 +48,8 @@ export function RegistrationScreen({ navigation }) {
 
   const dispatch = useDispatch();
 
-  const { userId } = useSelector((state) => state.auth);
-  // console.log("selector", userId);
+  const state = useSelector((state) => state.auth);
+  // console.log("selector", state);
 
   // const { logIn } = useUser();
 
@@ -77,21 +86,45 @@ export function RegistrationScreen({ navigation }) {
     setIsShowKeyboardIOS(true);
   };
 
+  const authSignUpUser =
+    ({ email, password, login }) =>
+    async (dispatch, getState) => {
+      try {
+        const { user } = await createUserWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+        // await onAuthStateChanged(auth, (user) => {
+        //   user.displayName = login;
+        // });
+
+        dispatch(
+          authSlice.actions.updateUserProfile({
+            userId: user.uid,
+            nickname: login,
+          })
+        );
+
+        if (user) {
+          navigation.navigate("Home");
+          setData(registration);
+        }
+
+        //   console.log("user", user);
+        //   console.log("name", name);
+      } catch (error) {
+        console.log(error.code);
+        alert(error.message);
+      }
+    };
+
   const submitForm = () => {
     Keyboard.dismiss();
     setIsShowKeyboardIOS(true);
     setIsShowKeyboard(true);
     // logIn(data);
     dispatch(authSignUpUser(data));
-
-    if (data.email && data.password && data.login) {
-      navigation.navigate("Home");
-      setData(registration);
-
-      return;
-    }
-
-    alert("You have to write something");
   };
 
   const navigateTo = () => {
