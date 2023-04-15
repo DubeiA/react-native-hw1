@@ -1,18 +1,12 @@
 import { TouchableWithoutFeedback, StyleSheet, View } from "react-native";
 import { Feather } from "@expo/vector-icons";
-import { signOut } from "firebase/auth";
-import { auth } from "../../firebase/config";
+import { authSignOutUser } from "../../redux/auth/authOperation";
 import { useDispatch } from "react-redux";
 
 // import { useUser } from "../Context";
 
-export const CustomBtn = ({ navigation }) => {
+export const CustomBtn = () => {
   const dispatch = useDispatch();
-
-  const authSignOutUser = () => async (dispatch, getState) => {
-    await signOut(auth);
-    console.log("s");
-  };
 
   const exit = () => {
     // logOut();

@@ -70,7 +70,7 @@ export function LoginScreen({ navigation }) {
     setIsShowKeyboardIOS(true);
     // logIn(data);
     dispatch(authSignInUser(data));
-    navigation.navigate("Home");
+    setData(login);
     // setData(login);
   };
 

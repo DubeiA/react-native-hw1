@@ -7,7 +7,7 @@ import { CustomBtn } from "../main/CustomBtn";
 
 const PostStack = createStackNavigator();
 
-export const PostsScreenNavigate = ({ navigation }) => {
+export const PostsScreenNavigate = () => {
   return (
     <PostStack.Navigator>
       <PostStack.Screen
@@ -23,7 +23,7 @@ export const PostsScreenNavigate = ({ navigation }) => {
           },
           headerTitle: { color: "#212121" },
 
-          headerRight: () => <CustomBtn navigation={navigation} />,
+          headerRight: () => <CustomBtn />,
           headerLeft: () => null,
         }}
         name="Posts"

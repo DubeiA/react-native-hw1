@@ -85,7 +85,7 @@ const CreatePostsScreen = ({ navigation }) => {
     console.log("TakePicLoc", location);
   };
 
-  const reTakePic = async () => {
+  const reTakePic = () => {
     // console.log(photo);
     setPhoto(null);
     // setLocation(null);
