@@ -19,6 +19,10 @@ import { EvilIcons } from "@expo/vector-icons";
 
 import * as MediaLibrary from "expo-media-library";
 
+import { storage } from "../../firebase/config";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+// import { getApp } from "firebase/app";
+
 const info = {
   name: "",
   locate: "",
@@ -93,7 +97,9 @@ const CreatePostsScreen = ({ navigation }) => {
 
   const publishPhoto = () => {
     console.log(location);
+
     if (photo) {
+      uploadFotoOnServer();
       navigation.navigate("Posts", { photo, infoPhoto, location });
       setInfoPhoto(info);
       setPhoto(null);
@@ -101,6 +107,26 @@ const CreatePostsScreen = ({ navigation }) => {
     }
     alert("make Foto");
   };
+
+  const uploadFotoOnServer = async () => {
+    const res = await fetch(photo);
+    const file = await res.blob();
+
+    const storageRef = await ref(storage, "images/" + file.data.name);
+    const uploadTask = await uploadBytesResumable(storageRef, file);
+
+    console.log("uploadTask", uploadTask.metadata.fullPath);
+    const get = await getDownloadURL(
+      ref(storage, uploadTask.metadata.fullPath)
+    );
+    console.log("get", get);
+    // const firebaseApp = getApp();
+    // const processPhoto = storage(
+    //   firebaseApp,
+    //   "gs://sociablesphere.appspot.com/images"
+    // );
+  };
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS == "ios" ? "padding" : "height"}
