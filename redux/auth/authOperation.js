@@ -13,8 +13,20 @@ const authSignInUser =
   ({ email, password }) =>
   async (dispatch, getState) => {
     try {
-      const user = await signInWithEmailAndPassword(auth, email, password);
-      console.log(user);
+      await signInWithEmailAndPassword(auth, email, password);
+      const user = auth.currentUser;
+
+      await updateProfile(user, {
+        email: user.email,
+      });
+
+      dispatch(
+        authSlice.actions.updateUserProfile({
+          userId: user.uid,
+          nickname: user.displayName,
+          email: user.email,
+        })
+      );
     } catch (error) {
       console.log(error.code);
       console.log(error.message);
@@ -31,12 +43,14 @@ const authSignUpUser =
 
       await updateProfile(user, {
         displayName: login,
+        email: user.email,
       });
 
       dispatch(
         authSlice.actions.updateUserProfile({
           userId: user.uid,
           nickname: user.displayName,
+          email: user.email,
         })
       );
     } catch (error) {

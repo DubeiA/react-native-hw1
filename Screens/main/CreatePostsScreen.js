@@ -1,5 +1,5 @@
 import { Camera } from "expo-camera";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -19,9 +19,10 @@ import { EvilIcons } from "@expo/vector-icons";
 
 import * as MediaLibrary from "expo-media-library";
 
-import { storage } from "../../firebase/config";
+import { storage, db } from "../../firebase/config";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-// import { getApp } from "firebase/app";
+import { collection, addDoc } from "firebase/firestore";
+import { useSelector } from "react-redux";
 
 const info = {
   name: "",
@@ -40,7 +41,9 @@ const CreatePostsScreen = ({ navigation }) => {
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
 
-  // console.log(infoPhoto);
+  const { userId, nickname } = useSelector((state) => state.auth);
+  const state = useSelector((state) => state);
+  // console.log(state);
   useEffect(() => {
     (async () => {
       const { status } = await Camera.requestCameraPermissionsAsync();
@@ -86,7 +89,6 @@ const CreatePostsScreen = ({ navigation }) => {
     const { coords } = await Location.getCurrentPositionAsync({});
 
     setLocation(coords);
-    console.log("TakePicLoc", location);
   };
 
   const reTakePic = () => {
@@ -96,17 +98,29 @@ const CreatePostsScreen = ({ navigation }) => {
   };
 
   const publishPhoto = () => {
-    console.log(location);
-
     if (photo) {
-      uploadFotoOnServer();
-      navigation.navigate("Posts", { photo, infoPhoto, location });
+      uploadPostsOnServer();
+      navigation.navigate("Posts");
       setInfoPhoto(info);
       setPhoto(null);
+      // console.log(infoPhoto);
       return;
     }
-    alert("make Foto");
+    alert("You forgot to make foto ");
   };
+
+  const uploadPostsOnServer = async () => {
+    const pic = await uploadFotoOnServer();
+    const docRef = await addDoc(collection(db, "posts"), {
+      pic,
+      infoPhoto,
+      location,
+      userId,
+      nickname,
+    });
+  };
+
+  // addDoc(collection(db, 'posts'))
 
   const uploadFotoOnServer = async () => {
     const res = await fetch(photo);
@@ -115,16 +129,12 @@ const CreatePostsScreen = ({ navigation }) => {
     const storageRef = await ref(storage, "images/" + file.data.name);
     const uploadTask = await uploadBytesResumable(storageRef, file);
 
-    console.log("uploadTask", uploadTask.metadata.fullPath);
+    // console.log("uploadTask", uploadTask.metadata.fullPath);
     const get = await getDownloadURL(
       ref(storage, uploadTask.metadata.fullPath)
     );
-    console.log("get", get);
-    // const firebaseApp = getApp();
-    // const processPhoto = storage(
-    //   firebaseApp,
-    //   "gs://sociablesphere.appspot.com/images"
-    // );
+    // console.log("get", get);
+    return get;
   };
 
   return (

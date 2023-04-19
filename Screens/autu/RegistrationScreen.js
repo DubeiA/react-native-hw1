@@ -39,7 +39,7 @@ export function RegistrationScreen({ navigation }) {
 
   const dispatch = useDispatch();
 
-  const state = useSelector((state) => state.auth);
+  // const state = useSelector((state) => state.auth);
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);

@@ -10,20 +10,31 @@ import {
 } from "react-native";
 
 import { EvilIcons } from "@expo/vector-icons";
+import { collection, onSnapshot } from "firebase/firestore";
+import { db } from "../../firebase/config";
 
-// import { useUser } from "../Context";
+import { useSelector } from "react-redux";
 
-const PostsScreen = ({ navigation, route }) => {
-  // const { username } = useUser();
-  const location = route.params;
-  // console.log("Post Location", location);
-
+const PostsScreen = ({ navigation }) => {
   const [posts, setPosts] = useState([]);
+  const userName = useSelector((state) => state);
+
+  console.log("Post", posts);
+
+  const getAllPosts = async () => {
+    await onSnapshot(collection(db, "posts"), (snapshot) => {
+      setPosts(
+        snapshot.docs.map((doc) => ({
+          id: doc.id,
+          post: doc.data(),
+        }))
+      );
+    });
+  };
+
   useEffect(() => {
-    if (route.params) {
-      setPosts((prevPosts) => [...prevPosts, route.params]);
-    }
-  }, [route.params]);
+    getAllPosts();
+  }, []);
   return (
     <View style={styles.container}>
       <View style={{ marginBottom: 10 }}>
@@ -34,9 +45,9 @@ const PostsScreen = ({ navigation, route }) => {
           />
         </View>
         <View style={styles.text}>
-          <Text style={{}}>Example with Login</Text>
+          <Text style={{ fontWeight: "bold" }}>{userName.auth.nickname}</Text>
 
-          {/* <Text style={{ right: 3 }}> {location.email} </Text> */}
+          <Text style={{ right: 3 }}> {userName.auth.email} </Text>
         </View>
       </View>
       <FlatList
@@ -58,10 +69,13 @@ const PostsScreen = ({ navigation, route }) => {
             }}
           >
             <Image
-              source={{ uri: item.photo }}
+              source={{ uri: item.post.pic }}
               style={{ width: 350, height: 200, borderRadius: 10 }}
             ></Image>
-            <Text style={{}}>{item.infoPhoto.name}</Text>
+            {/* {console.log(item.post.pic)} */}
+            <Text style={{ fontWeight: "bold" }}>
+              {item.post.infoPhoto.name}
+            </Text>
             {/* <Text>{[item.location.latitude, item.location.longitude]}</Text> */}
             <View
               style={{
@@ -70,14 +84,23 @@ const PostsScreen = ({ navigation, route }) => {
                 marginTop: 10,
               }}
             >
-              <TouchableOpacity onPress={() => navigation.navigate("Comments")}>
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate("Comments", {
+                    postId: item.id,
+                    pictures: item.post.pic,
+                  })
+                }
+              >
                 <EvilIcons name="comment" size={24} color="#bdbdbd" />
               </TouchableOpacity>
 
               <TouchableOpacity
-                onPress={() => navigation.navigate("Map", { location })}
+                onPress={() =>
+                  navigation.navigate("Map", { location: item.post.location })
+                }
               >
-                {item.infoPhoto.locate.length > 1 ? (
+                {item.post.infoPhoto.locate ? (
                   <View style={{ borderBottomWidth: 1 }}>
                     <EvilIcons
                       name="location"
@@ -85,7 +108,7 @@ const PostsScreen = ({ navigation, route }) => {
                       color="#BDBDBD"
                       style={styles.locationIcon}
                     />
-                    <Text>{item.infoPhoto.locate}</Text>
+                    <Text>{item.post.infoPhoto.locate}</Text>
                   </View>
                 ) : (
                   <View style={{ borderBottomWidth: 1 }}>

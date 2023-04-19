@@ -5,11 +5,11 @@ import { useDispatch } from "react-redux";
 
 // import { useUser } from "../Context";
 
-export const CustomBtn = () => {
+export const CustomBtn = ({ navigation }) => {
   const dispatch = useDispatch();
 
   const exit = () => {
-    // logOut();
+    //  navigation.navigate("Login");
     dispatch(authSignOutUser());
   };
   return (

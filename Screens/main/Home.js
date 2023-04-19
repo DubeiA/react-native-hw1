@@ -11,6 +11,7 @@ const Tab = createBottomTabNavigator();
 import { PostsScreenNavigate } from "./PostsScreenNavigate";
 import CreatePostsScreen from "./CreatePostsScreen";
 import ProfileScreen from "./ProfileScreen";
+import { CustomBtn } from "./CustomBtn";
 
 export const Home = ({ navigation, route }) => {
   const data = route.params;
@@ -60,6 +61,7 @@ export const Home = ({ navigation, route }) => {
           },
 
           tabBarShowLabel: false,
+          tabBarHideOnKeyboard: true,
           tabBarActiveTintColor: "#ffffff",
           tabBarActiveBackgroundColor: "#ff6c00",
 
@@ -139,6 +141,7 @@ export const Home = ({ navigation, route }) => {
           tabBarIcon: ({ color, size }) => (
             <SimpleLineIcons name="user" size={size} color={color} />
           ),
+          headerRight: () => <CustomBtn />,
         }}
         name="Profile"
         component={ProfileScreen}
