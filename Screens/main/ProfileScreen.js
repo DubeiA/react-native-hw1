@@ -5,7 +5,6 @@ import {
   View,
   Text,
   StyleSheet,
-  ImageBackground,
   Image,
   TouchableOpacity,
   FlatList,
@@ -40,8 +39,7 @@ const ProfileScreen = ({ navigation }) => {
       where("userId", "==", userId)
     );
 
-    // console.log(await getDocs(q));
-    const querySnapshot = await getDocs(q);
+    // const querySnapshot = await getDocs(q);
     await onSnapshot(q, (snapshot) => {
       setUserPosts(
         snapshot.docs.map((doc) => ({
@@ -50,13 +48,6 @@ const ProfileScreen = ({ navigation }) => {
         }))
       );
     });
-    // await querySnapshot.map((doc) => {
-    //   // doc.data() is never undefined for query doc snapshots
-    //   setUserPosts({
-    //     ...doc.data(),
-    //     id: doc.id,
-    //   });
-    // });
   };
   return (
     <View style={styles.container}>
