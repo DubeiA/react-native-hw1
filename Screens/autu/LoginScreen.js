@@ -1,7 +1,5 @@
 import { useState } from "react";
 
-// import { useUser } from "../Context";
-
 import {
   StyleSheet,
   Text,
@@ -35,8 +33,6 @@ export function LoginScreen({ navigation }) {
 
   const dispatch = useDispatch();
 
-  // const { logIn } = useUser();
-
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
@@ -68,10 +64,9 @@ export function LoginScreen({ navigation }) {
     Keyboard.dismiss();
     setIsShowKeyboard(true);
     setIsShowKeyboardIOS(true);
-    // logIn(data);
+
     dispatch(authSignInUser(data));
     setData(login);
-    // setData(login);
   };
 
   const navigateTo = () => {
@@ -170,7 +165,6 @@ const styles = StyleSheet.create({
     flex: 1,
     resizeMode: "contain",
     justifyContent: "flex-end",
-    // alignItems: "center",
   },
 
   addBtn: {
@@ -181,7 +175,6 @@ const styles = StyleSheet.create({
     right: -12,
   },
   containerRegister: {
-    // flex: 1,
     height: 450,
     backgroundColor: "#fff",
     borderTopRightRadius: 25,
@@ -190,18 +183,13 @@ const styles = StyleSheet.create({
   header: {
     alignItems: "center",
     marginTop: 32,
-
-    // marginBottom: 120,
   },
   headerTitle: {
     fontSize: 30,
     lineHeight: 35,
 
-    // fontWeight: 500,
     marginBottom: 16,
     color: "#212121",
-
-    // fontFamily: "Montserrat-Regulat",
   },
 
   input: {
@@ -214,19 +202,15 @@ const styles = StyleSheet.create({
     marginTop: 16,
     fontSize: 16,
     lineHeight: 19,
-    // fontFamily: "Montserrat-Regulat",
 
     color: "#212121",
   },
 
   form: {
-    // justifyContent: "flex-end",
     flex: 1,
     marginHorizontal: 16,
   },
-  inputTitle: {
-    // flex: 1,
-  },
+  inputTitle: {},
   registrationBtn: {
     marginTop: 43,
     paddingTop: 16,
@@ -241,7 +225,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 19,
     color: "#fff",
-    // fontFamily: "Montserrat-Regulat",
   },
   show: {
     position: "absolute",
@@ -253,7 +236,6 @@ const styles = StyleSheet.create({
     color: "#1B4371",
     fontSize: 16,
     lineHeight: 18.75,
-    // fontFamily: "Montserrat-Regulat",
   },
 
   enterText: {
@@ -262,6 +244,5 @@ const styles = StyleSheet.create({
     color: "#1B4371",
     fontSize: 16,
     lineHeight: 18.75,
-    // fontFamily: "Montserrat-Regulat",
   },
 });

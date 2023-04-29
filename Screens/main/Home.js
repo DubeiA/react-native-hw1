@@ -15,7 +15,7 @@ import { CustomBtn } from "./CustomBtn";
 
 export const Home = ({ navigation, route }) => {
   const data = route.params;
-  // console.log("Home", data);
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -29,12 +29,9 @@ export const Home = ({ navigation, route }) => {
             },
           }),
 
-          // height: 100,
-
           backgroundColor: "#fff",
           paddingHorizontal: 65,
-          // paddingBottom: 30,
-          // justifyContent: "space-evenly",
+
           borderTopWidth: 1,
         },
       })}
@@ -55,10 +52,7 @@ export const Home = ({ navigation, route }) => {
           },
           headerTitle: { color: "#212121" },
 
-          tabBarIconStyle: {
-            // marginLeft: 30,
-            // borderRadius: 10,
-          },
+          tabBarIconStyle: {},
 
           tabBarShowLabel: false,
           tabBarHideOnKeyboard: true,
@@ -66,7 +60,6 @@ export const Home = ({ navigation, route }) => {
           tabBarActiveBackgroundColor: "#ff6c00",
 
           tabBarItemStyle: {
-            // borderWidth: 1,
             borderRadius: 70,
             justifyContent: "center",
             marginBottom: 15,
@@ -97,7 +90,6 @@ export const Home = ({ navigation, route }) => {
           tabBarActiveTintColor: "#ffffff",
           tabBarActiveBackgroundColor: "#ff6c00",
           tabBarItemStyle: {
-            // borderWidth: 1,
             borderRadius: 70,
             justifyContent: "center",
             marginBottom: 15,
@@ -124,7 +116,6 @@ export const Home = ({ navigation, route }) => {
           headerTitleAlign: "center",
 
           tabBarIconStyle: {
-            // marginRight: 30,
             backgroundColor: "#FF6C00",
           },
           tabBarShowLabel: false,
@@ -132,7 +123,6 @@ export const Home = ({ navigation, route }) => {
           tabBarActiveBackgroundColor: "#ff6c00",
           tabBarHideOnKeyboard: true,
           tabBarItemStyle: {
-            // borderWidth: 1,
             borderRadius: 70,
             justifyContent: "center",
             marginBottom: 15,

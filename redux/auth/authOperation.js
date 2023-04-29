@@ -39,7 +39,6 @@ const authSignUpUser =
       await createUserWithEmailAndPassword(auth, email, password);
 
       const user = auth.currentUser;
-      // console.log("Register", user);
 
       await updateProfile(user, {
         displayName: login,
@@ -67,18 +66,16 @@ const authSignOutUser = () => async (dispatch, getState) => {
 const authStateChangeUser = () => async (dispatch, getState) => {
   await onAuthStateChanged(auth, (user) => {
     if (user) {
-      // console.log("auth2", user);
       dispatch(
         authSlice.actions.updateUserProfile({
           nickname: user.displayName,
           userId: user.uid,
         })
       );
-      // console.log("auth3", user.displayName);
+
       dispatch(
         authSlice.actions.authStateChange({
           stateChange: true,
-          // nickname: "n",
         })
       );
     }

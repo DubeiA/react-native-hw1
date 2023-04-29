@@ -72,11 +72,11 @@ const PostsScreen = ({ navigation }) => {
               source={{ uri: item.post.pic }}
               style={{ width: 350, height: 200, borderRadius: 10 }}
             ></Image>
-            {/* {console.log(item.post.pic)} */}
+
             <Text style={{ fontWeight: "bold" }}>
               {item.post.infoPhoto.name}
             </Text>
-            {/* <Text>{[item.location.latitude, item.location.longitude]}</Text> */}
+
             <View
               style={{
                 flexDirection: "row",

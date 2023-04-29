@@ -13,13 +13,7 @@ import {
 import { EvilIcons } from "@expo/vector-icons";
 
 import { db } from "../../firebase/config";
-import {
-  collection,
-  query,
-  where,
-  getDocs,
-  onSnapshot,
-} from "firebase/firestore";
+import { collection, query, where, onSnapshot } from "firebase/firestore";
 
 const ProfileScreen = ({ navigation }) => {
   const [image, setImage] = useState(
@@ -39,7 +33,6 @@ const ProfileScreen = ({ navigation }) => {
       where("userId", "==", userId)
     );
 
-    // const querySnapshot = await getDocs(q);
     await onSnapshot(q, (snapshot) => {
       setUserPosts(
         snapshot.docs.map((doc) => ({
@@ -90,7 +83,7 @@ const ProfileScreen = ({ navigation }) => {
             ></Image>
             {console.log(item.pic)}
             <Text style={{ fontWeight: "bold" }}>{item.infoPhoto.name}</Text>
-            {/* <Text>{[item.location.latitude, item.location.longitude]}</Text> */}
+
             <View
               style={{
                 flexDirection: "row",
@@ -148,13 +141,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    // justifyContent: "center",
   },
 
   foto: {
     borderRadius: 16,
     marginTop: 20,
-    // position: "relative",
   },
 
   addBtn: {
@@ -171,7 +162,6 @@ const styles = StyleSheet.create({
     width: 25,
     bottom: 12,
     right: -72,
-    // transform: [{ rotate: "45deg" }],
   },
 
   locationIcon: {
@@ -192,8 +182,6 @@ const styles = StyleSheet.create({
     marginLeft: 90,
     marginTop: 20,
   },
-
-  // foto: { width: 60, height: 60 },
 });
 
 export default ProfileScreen;

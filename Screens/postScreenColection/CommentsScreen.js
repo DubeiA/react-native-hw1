@@ -33,10 +33,7 @@ const CommentsScreen = ({ route }) => {
     setIsShowKeyboardIOS(true);
   };
 
-  // console.log(postId);
-
   const inputOpen = (value) => {
-    // setIsShowKeyboard(false);
     setComments((prevComments) => ({
       ...prevComments,
       name: value,
@@ -47,7 +44,6 @@ const CommentsScreen = ({ route }) => {
     const postsCollection = await collection(db, "posts");
     const newPostRef = await doc(postsCollection, postId);
     const newColec = await collection(newPostRef, "comments");
-    // const newPostData = comments;
 
     await addDoc(newColec, { comment: comments.name, nick: name.nickname });
 
@@ -60,7 +56,6 @@ const CommentsScreen = ({ route }) => {
     const newColec = await collection(newPostRef, "comments");
 
     await onSnapshot(newColec, (snapshot) => {
-      // console.log(snapshot);
       setAllComments(
         snapshot.docs.map((doc) => ({
           ...doc.data(),
@@ -69,8 +64,6 @@ const CommentsScreen = ({ route }) => {
       );
     });
   };
-
-  // const dateNow = time.toLocaleString();
 
   useEffect(() => {
     getAllComments();
@@ -89,14 +82,12 @@ const CommentsScreen = ({ route }) => {
           renderItem={({ item }) => (
             <View
               style={{
-                // borderWidth: 1,
                 marginTop: 24,
 
                 backgroundColor: "#e8e8e8",
                 marginHorizontal: 15,
                 borderRadius: 5,
-                // paddingLeft: 10,
-                // paddingRight: 10,
+
                 padding: 8,
               }}
             >
@@ -104,8 +95,6 @@ const CommentsScreen = ({ route }) => {
               <Text style={{ marginLeft: "auto", padding: 2 }}>
                 {item.nick}
               </Text>
-              {/* <Text>{item.time}</Text>
-              {console.log(item.time)} */}
             </View>
           )}
           keyExtractor={(item) => item.id}
@@ -149,8 +138,6 @@ const CommentsScreen = ({ route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // alignItems: "center",
-    // justifyContent: "flex-end",
   },
   // containerRegister: {
   //   marginTop: 480,
@@ -174,7 +161,6 @@ const styles = StyleSheet.create({
 
         borderRadius: 8,
 
-        // marginTop: 32,
         fontSize: 16,
         lineHeight: 19,
 
@@ -187,10 +173,9 @@ const styles = StyleSheet.create({
         height: 50,
         marginHorizontal: 16,
 
-        // marginBottom: 80,
         paddingLeft: 20,
         borderRadius: 8,
-        // justifyContent: "flex-end",
+
         marginBottom: 10,
 
         fontSize: 16,

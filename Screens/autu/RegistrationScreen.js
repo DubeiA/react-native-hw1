@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import {
   StyleSheet,
@@ -20,8 +20,6 @@ const registration = {
   password: "",
 };
 
-import { useSelector } from "react-redux";
-
 import { useDispatch } from "react-redux/";
 import { authSignUpUser } from "../../redux/auth/authOperation";
 
@@ -38,8 +36,6 @@ export function RegistrationScreen({ navigation }) {
   const [data, setData] = useState(registration);
 
   const dispatch = useDispatch();
-
-  // const state = useSelector((state) => state.auth);
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -78,7 +74,7 @@ export function RegistrationScreen({ navigation }) {
     Keyboard.dismiss();
     setIsShowKeyboardIOS(true);
     setIsShowKeyboard(true);
-    // logIn(data);
+
     dispatch(authSignUpUser(data));
     setData(registration);
   };
@@ -207,13 +203,11 @@ const styles = StyleSheet.create({
     flex: 1,
     resizeMode: "cover",
     justifyContent: "flex-end",
-    // alignItems: "center",
   },
 
   containerRegister: {
     justifyContent: "center",
 
-    // flex: 1,
     height: 500,
     backgroundColor: "#fff",
     borderTopRightRadius: 25,
@@ -224,11 +218,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: -40,
     color: "#212121",
-    // marginBottom: 120,
   },
   containerFoto: {
-    // position: "relative",
-    // zIndex: 2,
     top: -60,
     backgroundColor: "#F6F6F6",
     marginLeft: "auto",
@@ -238,7 +229,6 @@ const styles = StyleSheet.create({
   },
   foto: {
     borderRadius: 16,
-    // position: "relative",
   },
 
   addBtn: {
@@ -255,16 +245,13 @@ const styles = StyleSheet.create({
     width: 25,
     bottom: 13,
     right: -12,
-    // transform: [{ rotate: "45deg" }],
   },
   headerTitle: {
     fontSize: 30,
     lineHeight: 35,
     letterSpacing: 0.01,
-    // fontWeight: 500,
+
     marginBottom: 16,
-    // color: "#f0f8ff",
-    // fontFamily: "Montserrat-Bold",
   },
 
   input: {
@@ -277,19 +264,15 @@ const styles = StyleSheet.create({
     marginTop: 16,
     fontSize: 16,
     lineHeight: 19,
-    // fontFamily: "Montserrat-Regulat",
 
     color: "#212121",
   },
 
   form: {
-    // justifyContent: "flex-end",
     flex: 1,
     marginHorizontal: 16,
   },
-  inputTitle: {
-    // flex: 1,
-  },
+  inputTitle: {},
   registrationBtn: {
     marginTop: 43,
     paddingTop: 16,
@@ -304,7 +287,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 19,
     color: "#fff",
-    // fontFamily: "Montserrat-Regulat",
   },
   show: {
     position: "absolute",
@@ -316,7 +298,6 @@ const styles = StyleSheet.create({
     color: "#1B4371",
     fontSize: 16,
     lineHeight: 18.75,
-    // fontFamily: "Montserrat-Regulat",
   },
 
   enterText: {
@@ -325,6 +306,5 @@ const styles = StyleSheet.create({
     color: "#1B4371",
     fontSize: 16,
     lineHeight: 18.75,
-    // fontFamily: "Montserrat-Regulat",
   },
 });

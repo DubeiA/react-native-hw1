@@ -16,7 +16,7 @@ const Stack = createStackNavigator();
 export const MainMenu = () => {
   const select = useSelector((state) => state);
   const dispatch = useDispatch();
-  //   console.log("select", select.auth.stateChange);
+
   useEffect(() => {
     dispatch(authStateChangeUser());
   }, []);

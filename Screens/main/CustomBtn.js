@@ -3,13 +3,10 @@ import { Feather } from "@expo/vector-icons";
 import { authSignOutUser } from "../../redux/auth/authOperation";
 import { useDispatch } from "react-redux";
 
-// import { useUser } from "../Context";
-
 export const CustomBtn = ({ navigation }) => {
   const dispatch = useDispatch();
 
   const exit = () => {
-    //  navigation.navigate("Login");
     dispatch(authSignOutUser());
   };
   return (

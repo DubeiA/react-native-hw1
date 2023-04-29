@@ -43,7 +43,7 @@ const CreatePostsScreen = ({ navigation }) => {
 
   const { userId, nickname } = useSelector((state) => state.auth);
   const state = useSelector((state) => state);
-  // console.log(state);
+
   useEffect(() => {
     (async () => {
       const { status } = await Camera.requestCameraPermissionsAsync();
@@ -92,9 +92,7 @@ const CreatePostsScreen = ({ navigation }) => {
   };
 
   const reTakePic = () => {
-    // console.log(photo);
     setPhoto(null);
-    // setLocation(null);
   };
 
   const publishPhoto = () => {
@@ -103,7 +101,7 @@ const CreatePostsScreen = ({ navigation }) => {
       navigation.navigate("Posts");
       setInfoPhoto(info);
       setPhoto(null);
-      // console.log(infoPhoto);
+
       return;
     }
     alert("You forgot to make foto ");
@@ -120,8 +118,6 @@ const CreatePostsScreen = ({ navigation }) => {
     });
   };
 
-  // addDoc(collection(db, 'posts'))
-
   const uploadFotoOnServer = async () => {
     const res = await fetch(photo);
     const file = await res.blob();
@@ -129,11 +125,10 @@ const CreatePostsScreen = ({ navigation }) => {
     const storageRef = await ref(storage, "images/" + file.data.name);
     const uploadTask = await uploadBytesResumable(storageRef, file);
 
-    // console.log("uploadTask", uploadTask.metadata.fullPath);
     const get = await getDownloadURL(
       ref(storage, uploadTask.metadata.fullPath)
     );
-    // console.log("get", get);
+
     return get;
   };
 
@@ -183,8 +178,6 @@ const CreatePostsScreen = ({ navigation }) => {
           <TextInput
             style={styles.input}
             placeholder="Name"
-            // onBlur={}
-            // onFocus={}
             value={infoPhoto.name}
             onChangeText={(value) =>
               setInfoPhoto((prevInfoPhoto) => ({
@@ -204,8 +197,6 @@ const CreatePostsScreen = ({ navigation }) => {
           <TextInput
             style={[styles.input, { paddingLeft: 25 }]}
             placeholder="Location"
-            // onBlur={}
-            // onFocus={}
             value={infoPhoto.locate}
             onChangeText={(value) =>
               setInfoPhoto((prevInfoPhoto) => ({
@@ -293,7 +284,6 @@ const styles = StyleSheet.create({
         height: 200,
         width: 444,
         left: 0,
-        // marginLeft: 20,
       },
     }),
   },
